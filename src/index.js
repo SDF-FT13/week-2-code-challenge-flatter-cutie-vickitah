@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const BASE_URL = "http://localhost:3000/characters";
     let currentCharacter = null;
 
-    // Fetch and display all characters
+  
     function loadCharacters() {
         fetch(BASE_URL)
             .then(response => response.json())
@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
             .catch(error => console.error("Error fetching characters:", error));
     }
 
-    // Create character span in character bar
+   
     function createCharacterSpan(character) {
         const span = document.createElement("span");
         span.textContent = character.name;
@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
         characterBar.appendChild(span);
     }
 
-    // Display character details
+   
     function displayCharacterDetails(character) {
         currentCharacter = character;
         characterName.textContent = character.name;
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
         characterVotes.textContent = character.votes;
     }
 
-    // Handle voting
+   
     votesForm.addEventListener("submit", (e) => {
         e.preventDefault();
         if (!currentCharacter) return;
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
         currentCharacter.votes += addedVotes;
         characterVotes.textContent = currentCharacter.votes;
 
-        // Update server
+     
         fetch(`${BASE_URL}/${currentCharacter.id}`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
@@ -62,13 +62,13 @@ document.addEventListener("DOMContentLoaded", () => {
         votesInput.value = "";
     });
 
-    // Reset votes to zero
+    
     resetButton.addEventListener("click", () => {
         if (!currentCharacter) return;
         currentCharacter.votes = 0;
         characterVotes.textContent = "0";
 
-        // Update server
+    
         fetch(`${BASE_URL}/${currentCharacter.id}`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .catch(error => console.error("Error resetting votes:", error));
     });
 
-    // Handle new character submission
+    
     characterForm.addEventListener("submit", (e) => {
         e.preventDefault();
         const newCharacter = {
@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
             votes: 0
         };
 
-        // Save to server
+        
         fetch(BASE_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -102,6 +102,6 @@ document.addEventListener("DOMContentLoaded", () => {
         characterForm.reset();
     });
 
-    // Load characters on page load
+    
     loadCharacters();
 });
